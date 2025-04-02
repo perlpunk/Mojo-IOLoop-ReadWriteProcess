@@ -28,6 +28,9 @@ jobs:
         run: |
           brew install bash
           brew install gnu-sed
+          /bin/bash --version
+          bash --version
+          which bash
 
       - uses: actions/checkout@v4
       - uses: shogo82148/actions-setup-perl@v1
