@@ -130,6 +130,9 @@ subtest 'process is_running()' => sub {
 };
 
 subtest 'process execute()' => sub {
+  my $out = qx{bash --version};
+  diag "=== bash: $out";
+
   my $test_script         = check_bin("$FindBin::Bin/data/process_check.sh");
   my $test_script_sigtrap = check_bin("$FindBin::Bin/data/term_trap.sh");
   my $p                   = Mojo::IOLoop::ReadWriteProcess->new(
@@ -139,8 +142,10 @@ subtest 'process execute()' => sub {
   is $p->getline,     "TEST normal print\n", 'Get right output from stdout';
   is $p->err_getline, "TEST error print\n",  'Get right output from stderr';
   is $p->is_running,  1, 'process is still waiting for our input';
-  $p->write("FOOBAR");
-  is $p->read, "you entered FOOBAR\n",
+
+  diag "##################### 1";
+  $p->write("FOOBAR1");
+  is $p->read, "you entered FOOBAR1\n",
     'process received input and printed it back';
   $p->stop();
   is $p->is_running, 0, 'process is not running anymore';
@@ -158,14 +163,9 @@ subtest 'process execute()' => sub {
   is $p->is_running,  1, 'process is still waiting for our input';
 
 
-  my $out = qx{bash --version};
-  diag "=== bash: $out";
-
-  diag "##################### $p";
-  my @i = @Mojo::IOLoop::ReadWriteProcess::ISA;
-  diag "### @i";
-  $p->write("FOOBAR1");
-  is $p->getline, "you entered FOOBAR1\n",
+  diag "##################### 2";
+  $p->write("FOOBAR2");
+  is $p->getline, "you entered FOOBAR2\n",
     'process received input and printed it back';
   $p->wait_stop();
   is $p->is_running,  0,           'process is not running anymore';
@@ -179,8 +179,10 @@ subtest 'process execute()' => sub {
   is $p->stdout,      "TEST normal print\n", 'Get right output from stdout';
   is $p->err_getline, "TEST error print\n",  'Get right output from stderr';
   is $p->is_running,  1, 'process is still waiting for our input';
-  $p->write("FOOBAR2");
-  is $p->getline, "you entered FOOBAR2\n",
+
+  diag "##################### 3";
+  $p->write("FOOBAR3");
+  is $p->getline, "you entered FOOBAR3\n",
     'process received input and printed it back';
   $p->wait_stop();
   is $p->is_running,  0,           'process is not running anymore';
