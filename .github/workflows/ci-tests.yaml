@@ -35,7 +35,9 @@ jobs:
           ./Build build
       - name: Run tests
         run: |
-          TEST_SHARED=1 TEST_SUBREAPER=1 cover -test -report codecovbash
+          for i in 1..10; do
+          TEST_SHARED=1 TEST_SUBREAPER=1 prove -l -v t/01_run.t
+          done
       - name: Upload coverage to ☂️ Codecov
         uses: codecov/codecov-action@v5
         if: matrix.perl == 'latest'

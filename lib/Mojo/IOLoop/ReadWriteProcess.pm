@@ -425,6 +425,7 @@ sub _syswrite {
 }
 
 sub _getline {
+#    warn __PACKAGE__.':'.__LINE__.": !!!!!!!!!!!!!!!! _getline(@_)\n";
   return unless IO::Select->new($_[0])->can_read(10);
   shift->getline;
 }
@@ -437,6 +438,7 @@ sub _getlines {
 # Write to the controlled-process STDIN
 sub write_stdin {
   my ($self, @data) = @_;
+    warn __PACKAGE__.':'.__LINE__.": ??????????????????????????? @data\n";
   _syswrite($self->write_stream, @data);
   return $self;
 }

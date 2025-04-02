@@ -156,6 +156,14 @@ subtest 'process execute()' => sub {
   is $p->stdout,      "TEST normal print\n", 'Get right output from stdout';
   is $p->err_getline, "TEST error print\n",  'Get right output from stderr';
   is $p->is_running,  1, 'process is still waiting for our input';
+
+
+  my $out = qx{bash --version};
+  diag "=== bash: $out";
+
+  diag "##################### $p";
+  my @i = @Mojo::IOLoop::ReadWriteProcess::ISA;
+  diag "### @i";
   $p->write("FOOBAR");
   is $p->getline, "you entered FOOBAR\n",
     'process received input and printed it back';
@@ -295,6 +303,8 @@ subtest 'process execute()' => sub {
   is $p->write_pidfile(), undef, "No filename given to write_pidfile";
   $p->stop();
 };
+
+done_testing; exit;
 
 subtest 'process(execute => /bin/true)' => sub {
   check_bin('/bin/true');
