@@ -26,14 +26,9 @@ jobs:
       - name: Install Bash 4 and GNU sed on Mac
         if: matrix.os == 'macos-latest'
         run: |
-          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-          brew update
-
           brew install bash
           brew install gnu-sed
 
-          echo "/usr/local/bin" >> $GITHUB_PATH
-          echo "$(brew --prefix)/opt/gnu-sed/libexec/gnubin" >> $GITHUB_PATH
       - uses: actions/checkout@v4
       - uses: shogo82148/actions-setup-perl@v1
         with:
