@@ -425,9 +425,11 @@ sub _syswrite {
 }
 
 sub _getline {
-#    warn __PACKAGE__.':'.__LINE__.": !!!!!!!!!!!!!!!! _getline(@_)\n";
+    warn __PACKAGE__.':'.__LINE__.": !!!!!!!!!!!!!!!! _getline(@_)\n";
   return unless IO::Select->new($_[0])->can_read(10);
-  shift->getline;
+  my $line = shift->getline;
+  warn __PACKAGE__.':'.__LINE__.": ------> got: $line\n";
+  return $line;
 }
 
 sub _getlines {
