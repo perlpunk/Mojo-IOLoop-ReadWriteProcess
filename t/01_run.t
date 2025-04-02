@@ -137,8 +137,8 @@ subtest 'process execute()' => sub {
   my $test_script_sigtrap = check_bin("$FindBin::Bin/data/term_trap.sh");
   my $p                   = Mojo::IOLoop::ReadWriteProcess->new(
     sleeptime_during_kill => $interval,
-    execute               => $test_script
-  )->start();
+    execute               => 'bash',
+  )->args($test_script)->start();
   is $p->getline,     "TEST normal print\n", 'Get right output from stdout';
   is $p->err_getline, "TEST error print\n",  'Get right output from stderr';
   is $p->is_running,  1, 'process is still waiting for our input';
