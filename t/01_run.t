@@ -138,7 +138,7 @@ subtest 'process execute()' => sub {
   my $p                   = Mojo::IOLoop::ReadWriteProcess->new(
     sleeptime_during_kill => $interval,
     execute               => 'bash',
-  )->args($test_script)->start();
+  )->args([$test_script])->start();
   is $p->getline,     "TEST normal print\n", 'Get right output from stdout';
   is $p->err_getline, "TEST error print\n",  'Get right output from stderr';
   is $p->is_running,  1, 'process is still waiting for our input';
@@ -153,8 +153,8 @@ subtest 'process execute()' => sub {
   $p = Mojo::IOLoop::ReadWriteProcess->new(
     kill_sleeptime        => $interval,
     sleeptime_during_kill => $interval,
-    execute               => $test_script,
-    args                  => [
+    execute               => 'bash',
+    args                  => [ $test_script,
       qw(FOO
         BAZ)
     ])->start();
@@ -174,8 +174,8 @@ subtest 'process execute()' => sub {
 
   $p = Mojo::IOLoop::ReadWriteProcess->new(
     sleeptime_during_kill => $interval,
-    execute               => $test_script
-  )->args([qw(FOO BAZ)])->start();
+    execute               => 'bash',
+  )->args([$test_script, qw(FOO BAZ)])->start();
   is $p->stdout,      "TEST normal print\n", 'Get right output from stdout';
   is $p->err_getline, "TEST error print\n",  'Get right output from stderr';
   is $p->is_running,  1, 'process is still waiting for our input';
@@ -196,8 +196,8 @@ subtest 'process execute()' => sub {
     kill_sleeptime        => $interval,
     sleeptime_during_kill => $interval,
     separate_err          => 0,
-    execute               => $test_script
-  );
+    execute               => 'bash',
+  )->args([$test_script]);
   $p->start();
   sleep $interval until $p->is_running || --$patience <= 0;
   is $p->is_running, 1, 'process is still running';
