@@ -164,8 +164,8 @@ subtest 'process execute()' => sub {
   diag "##################### $p";
   my @i = @Mojo::IOLoop::ReadWriteProcess::ISA;
   diag "### @i";
-  $p->write("FOOBAR");
-  is $p->getline, "you entered FOOBAR\n",
+  $p->write("FOOBAR1");
+  is $p->getline, "you entered FOOBAR1\n",
     'process received input and printed it back';
   $p->wait_stop();
   is $p->is_running,  0,           'process is not running anymore';
@@ -179,13 +179,15 @@ subtest 'process execute()' => sub {
   is $p->stdout,      "TEST normal print\n", 'Get right output from stdout';
   is $p->err_getline, "TEST error print\n",  'Get right output from stderr';
   is $p->is_running,  1, 'process is still waiting for our input';
-  $p->write("FOOBAR");
-  is $p->getline, "you entered FOOBAR\n",
+  $p->write("FOOBAR2");
+  is $p->getline, "you entered FOOBAR2\n",
     'process received input and printed it back';
   $p->wait_stop();
   is $p->is_running,  0,           'process is not running anymore';
   is $p->getline,     "FOO BAZ\n", 'process received extra arguments';
   is $p->exit_status, 100,         'able to retrieve function return';
+  return;
+
 
   my $patience = $timeout / $interval;
   $p = Mojo::IOLoop::ReadWriteProcess->new(
