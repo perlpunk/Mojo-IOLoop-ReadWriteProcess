@@ -36,14 +36,6 @@ jobs:
           ./Build build
       - name: Run tests
         run: |
-          for i in 1..10; do
+          for i in 1 2 3 4 5 6 7 8 9 10; do
           TEST_SHARED=1 TEST_SUBREAPER=1 prove -l -v t/01_run.t
           done
-      - name: Upload coverage to ☂️ Codecov
-        uses: codecov/codecov-action@v5
-        if: matrix.perl == 'latest'
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          file: cover_db/codecov.json
-          fail_ci_if_error: true
-          verbose: true
