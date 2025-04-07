@@ -30,9 +30,8 @@ jobs:
         run: perl -V
       - name: Set up perl
         run: |
+          cpanm --version
           cpanm --with-feature=ci --installdeps --notest .
-          perl Build.PL
-          ./Build build
       - name: Run tests
         if: matrix.perl != 'latest'
         run: |
