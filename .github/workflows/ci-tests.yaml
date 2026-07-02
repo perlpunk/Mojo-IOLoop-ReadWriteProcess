@@ -30,7 +30,7 @@ jobs:
         run: perl -V
       - name: Set up perl
         run: |
-          cpanm --with-feature=ci --installdeps --notest .
+          cpanm --with-feature=ci --installdeps --notest -v .
       - name: Run tests
         if: matrix.perl != 'latest' || matrix.os == 'macos-latest'
         run: |
